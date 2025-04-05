@@ -7,15 +7,15 @@ import os
 
 app = Flask(__name__)
 # IMPORTANT:  Configure CORS properly for production!  This is just for development.
-CORS(app, supports_credentials=True, origin="http://localhost:3000")  # Adjust origin as needed
+CORS(app, supports_credentials=True, origin="http://localhost:3000",methods=["GET", "POST"])  # Adjust origin as needed
 
 # Change this to a strong, randomly generated secret in a real application!
 app.config['SECRET_KEY'] = os.environ.get('JWT_SECRET', 'your-dev-secret-key')
 
 # In-memory user database (replace with a real database in production)
 users = {
-    "testuser": {"id": 1, "password": "password123"},
-    "admin": {"id": 2, "password": "adminpass"},
+    "testuser": {"id": 1,"username":"testuser", "password": "password123"},
+    "iRykov": {"id": 2,"username":"iRykov", "password": "adminpass"},
 }
 
 # --- Utility Functions ---
@@ -29,7 +29,9 @@ def token_required(f):
 
         try:
             data = jwt.decode(token, app.config['SECRET_KEY'], algorithms=["HS256"])
+            print("DATA:",data)
             current_user = users.get(data['username']) # Fetch user from 'database'
+            print(current_user)
 
             if current_user is None:
                 return jsonify({'message': 'Invalid token'}), 401
@@ -79,19 +81,22 @@ def login():
 
     # Set access token as httpOnly cookie
     resp = jsonify({'message': 'Successfully logged in!', 'user': {'id': user['id'], 'username': auth.get('username')}})
-    resp.set_cookie('token', access_token, httponly=True, secure=False, samesite='Strict') # secure=True in production!
-    resp.set_cookie('refresh_token', refresh_token, httponly=True, secure=False, samesite='Strict') # secure=True in production!
+    # resp.set_cookie('token', access_token, httponly=True, secure=False, samesite='None') # secure=True in production!
+
+    secure_cookie = request.is_secure  # Dynamically set based on whether request is HTTPS
+    resp.set_cookie('token', access_token, httponly=True, secure=True, samesite='None')
+    resp.set_cookie('refresh_token', refresh_token, httponly=True, secure=True, samesite='None') # secure=True in production!
 
     return resp
 
 @app.route('/api/logout', methods=['POST'])
 def logout():
     resp = jsonify({'message': 'Successfully logged out!'})
-    resp.set_cookie('token', '', expires=0, httponly=True, secure=False, samesite='Strict')
-    resp.set_cookie('refresh_token', '', expires=0, httponly=True, secure=False, samesite='Strict')
+    resp.set_cookie('token', '', expires=0, httponly=True, secure=True, samesite='None')
+    resp.set_cookie('refresh_token', '', expires=0, httponly=True, secure=True, samesite='None')
     return resp
 
-@app.route('/api/refresh-token', methods=['POST'])
+@app.route('/api/refresh-token', methods=['POST','OPTIONS'])
 def refresh_token():
     refresh_token = request.cookies.get('refresh_token')
 
@@ -109,8 +114,8 @@ def refresh_token():
         access_token, new_refresh_token = create_tokens(data['username']) # issue new access and refresh
 
         resp = jsonify({'message': 'Access token refreshed'})
-        resp.set_cookie('token', access_token, httponly=True, secure=False, samesite='Strict')
-        resp.set_cookie('refresh_token', new_refresh_token, httponly=True, secure=False, samesite='Strict') # rotate the refresh token
+        resp.set_cookie('token', access_token, httponly=True, secure=True, samesite='None')
+        resp.set_cookie('refresh_token', new_refresh_token, httponly=True, secure=True, samesite='None') # rotate the refresh token
         return resp
 
     except jwt.ExpiredSignatureError:
@@ -129,6 +134,7 @@ def protected_data(current_user):
 @app.route('/api/check-auth')
 @token_required
 def check_auth(current_user):
+    print(current_user)
     return jsonify({'message': 'User is authenticated', 'user': {'id': current_user["id"], 'username': current_user["username"]}})
 
 
