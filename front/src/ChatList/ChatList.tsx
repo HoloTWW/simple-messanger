@@ -8,12 +8,12 @@ const generateArray = (length:number, max:number) => (
 
 const ChatListItem = () =>{
     return(
-<Link to={"@user"} className="w-100 btn btn-outline-secondary rounded-0 border-0 m-0 p-0 ps-2 py-2">
-    <div className="row row-cols-2 w-100 ">
-        <div className="col-2">
+<Link to={"/chat/user"} className="w-100 btn btn-outline-secondary rounded-0 border-0 m-0 p-0 ps-2 py-2">
+    <div className="row row-cols-2">
+        <div className="col-2 d-none d-lg-block">
             <img className="rounded"  height={"60px"}  src="/default/avatar.jpeg" alt={"avatar.jpg"}/>
         </div>
-        <div className="col-10 ">
+        <div className="col-auto col-lg-10 ">
             <div className="row">
                 <div className="col fs-5 text-truncate text-start">
                     username lalalalalalalal
