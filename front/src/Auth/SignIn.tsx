@@ -1,11 +1,13 @@
 import React, { useState } from "react";
+import { useAuth } from "./AuthContext";
+import { useNavigate } from "react-router-dom";
 
 const SignIn = ()=>{
 
-    const [login,setLogin] = useState<string>();
-    const [password,setPassword] = useState<string>();
+    const [username,setUsername] = useState<string>('');
+    const [password,setPassword] = useState<string>('');
 
-    const [valid,setValid] = useState(false);
+    const [valid,setValid] = useState(true);
     
     const styleContainer = {
         width:"100%",
@@ -21,9 +23,18 @@ const SignIn = ()=>{
     const v_default:string = "form-control";
     const v_invalid:string = "form-control is-invalid";
 
-    const handleOnSubmit = () =>{
-        
-    }
+    const {login} = useAuth();
+    const navigate = useNavigate();
+
+    const handleOnSubmit = async (e: React.FormEvent) => {
+        console.log(username);
+        console.log(password);
+        e.preventDefault();
+        const success = await login(username, password);
+        if (success) {
+            navigate('/');
+        }
+    };
 
 
     return (<>
@@ -38,15 +49,15 @@ const SignIn = ()=>{
     <div>
         <div className="my-2 mt-3">
             <label>{label_login}</label>
-            <input className={valid ? v_default : v_invalid } type="text"/>
+            <input onChange={(value)=>setUsername(value.target.value)} className={valid ? v_default : v_invalid } type="text"/>
         </div>
         <div className="my-2">
             <label>{label_pswd}</label>
-            <input className= {valid ? v_default : v_invalid } type="password"/>
+            <input onChange={(value)=>setPassword(value.target.value)} className= {valid ? v_default : v_invalid } type="password"/>
         </div>
 
         <div className="mt-4 row mx-auto">
-            <button className="btn btn-primary">Sign In</button>
+            <button onClick={handleOnSubmit} className="btn btn-primary">Sign In</button>
         </div>
         { !valid ? <label className="text-danger fw-semibold">Incorrect login or password, try again</label> : null}
     </div>
