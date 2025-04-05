@@ -57,8 +57,9 @@ const Chat = () =>{
     <Sender/>
         {/* это примеры сообщений  */}
     </div>
-    <div className="px-3 py-2 w-50">
-        <input type="text" className=" form-control"/>
+    <div className="px-3 py-2 w-50 input-group">
+        <input className=" form-control"/>
+        <button className="btn btn-outline-primary">Send</button>
     </div>
     </div>)
 }
