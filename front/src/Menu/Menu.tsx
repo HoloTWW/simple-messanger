@@ -1,6 +1,7 @@
 import React, { CSSProperties, use, useState } from "react";
 import ContactList from "./ModalComponent/ContactList";
 import Settings from "./ModalComponent/Settings";
+import { useAuth } from "../Auth/AuthContext";
 
 interface Folder {
     id: number;
@@ -8,6 +9,7 @@ interface Folder {
 }
 
 const Menu = () =>{
+    const {user,logout} = useAuth();
     const [modalContact,setModalContact] = useState<boolean>(false);
     const [modalSetting,setModalSetting] = useState<boolean>(false);
     
@@ -46,19 +48,27 @@ const Menu = () =>{
     const handleDropdownToggle = () =>{
         const temp:boolean = openDm;
         setOpenDm(!openDm);
-    } 
+    }
+    
+    const handleLogout = () =>{
+        logout();
+    }
 
     const DropdownMenu = () =>{
         const st:CSSProperties = {zIndex:1000};
         return (
         <div style={st} className="position-absolute top-0 start-100 ms-2 bg-secondary-subtle rounded border-1 border">
+            <button className="btn btn-outline-secondary border-0 rounded-0 d-flex align-items-center px-3 py-2" >
+                <img  height={"25px"} className="rounded" src="/default/avatar.jpeg" alt={"avatar.jpg"}/>
+                <span className="ps-2">{user?.username}</span>
+            </button>
             <div className=" btn-group-vertical w-100 ">
                 <button onClick={handleContactModal} className="btn btn-outline-secondary px-3 py-2 text-start border-0 rounded-0">Contacts</button>
                 {/* <button className="btn btn-outline-secondary ps-3 text-start border-0 rounded-0">Theme</button> */}
             </div>
             <div className=" btn-group-vertical w-100  ">
                 <button onClick={handleSettingModal} className="btn btn-outline-secondary px-3 py-2 text-start border-0 rounded-0">Settings</button>
-                <button className="btn btn-outline-danger px-3 py-2  text-start border-0 rounded-0">Sign Out</button>
+                <button onClick={handleLogout} className="btn btn-outline-danger px-3 py-2  text-start border-0 rounded-0">Sign Out</button>
             </div>
         </div>
         )
