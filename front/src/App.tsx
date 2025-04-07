@@ -1,15 +1,15 @@
 import React from 'react';
 import logo from './logo.svg';
 import './App.css';
-import Menu from './Menu/Menu';
-import SignIn from './Auth/SignIn';
-import SignUp from './Auth/SignUp';
+import Menu from './page/Menu/Menu';
+import SignIn from './page/Auth/SignIn';
+import SignUp from './page/Auth/SignUp';
 import { BrowserRouter, Navigate, Route, Routes, useParams } from 'react-router-dom';
-import ContactList from './Menu/ModalComponent/ContactList';
-import ChatList from './ChatList/ChatList';
-import Chat from './Chat/Chat';
-import { AuthProvider, useAuth } from './Auth/AuthContext';
-import Etc from './404Page/404Page';
+import ContactList from './page/Menu/ModalComponent/ContactList';
+import ChatList from './page/ChatList/ChatList';
+import Chat from './page/Chat/Chat';
+import { AuthProvider, useAuth } from './components/AuthContext';
+import Etc from './page/404Page/404Page';
 
 
 const InApp = () => {

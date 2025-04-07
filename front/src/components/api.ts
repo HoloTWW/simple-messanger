@@ -1,4 +1,4 @@
-import { useAuth } from "./Auth/AuthContext";
+import { useAuth } from "./AuthContext";
 
 // uri
 

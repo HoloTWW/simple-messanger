@@ -1,7 +1,7 @@
 import React, { CSSProperties, use, useState } from "react";
 import ContactList from "./ModalComponent/ContactList";
 import Settings from "./ModalComponent/Settings";
-import { useAuth } from "../Auth/AuthContext";
+import { useAuth } from "../../components/AuthContext";
 
 interface Folder {
     id: number;

@@ -1,5 +1,5 @@
 import React, { createContext, useState, useContext, useEffect } from 'react';
-import { uri_dict } from '../api';
+import { uri_dict } from './api';
 
 export interface User {
     id: number;
