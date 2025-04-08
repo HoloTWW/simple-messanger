@@ -2,9 +2,10 @@ import React, { CSSProperties, use, useState } from "react";
 import ContactList from "./ModalComponent/ContactList";
 import Settings from "./ModalComponent/Settings";
 import { useAuth } from "../../components/AuthContext";
+import FolderList from "./ScrollFolder";
 
 interface Folder {
-    id: number;
+    id: string;
     name: string;
 }
 
@@ -14,21 +15,21 @@ const Menu = () =>{
     const [modalSetting,setModalSetting] = useState<boolean>(false);
     
     const [folders, setFolders] = useState<Folder[]>([
-        {id:0,name:"General"},
-        {id:2,name:"Private"},
-        {id:3, name: "Work"},
-        {id:4, name: "Work"},
-        {id:5, name: "Work"},
-        {id:6,name:"Private"},
-        {id:7,name:"Privateeqweqeq3eq"},
-        {id:8,name:"Private31232121"},
-        {id:9,name:"Private"},
-        {id:10,name:"Private"},
+        {id:"0",name:"General"},
+        {id:"2",name:"Private"},
+        {id:"3", name: "Work"},
+        {id:"4", name: "Work"},
+        {id:"5", name: "Work"},
+        {id:"6",name:"Private"},
+        {id:"7",name:"Privateeqweqeq3eq"},
+        {id:"8",name:"Private31232121"},
+        {id:"9",name:"Private"},
+        {id:"10",name:"Private"},
     ]); 
     
-    const [currentFolder, setCurrentFolder ] = useState<number>(0);
+    const [currentFolder, setCurrentFolder ] = useState<string>("0");
 
-    const handleChangeFolder = (id: number) =>{
+    const handleChangeFolder = (id: string) =>{
         setCurrentFolder(id);
     };
 
@@ -88,19 +89,11 @@ const Menu = () =>{
         </div>
         
         
-        <div  className="nav nav-underline overflow-auto" id="folderlist" style={{display:"flex",whiteSpace:"nowrap",flexWrap:"nowrap"}} >
-            { folders.map((folder,index)=>(
-            <>
-                <button 
-                    key={index} 
-                    onClick={ () => handleChangeFolder(folder.id)} 
-                    className={`nav-item px-2 nav-link ${currentFolder == folder.id ? 'active': null }`} 
-                    data-bs-toggle="tab">
-                        {folder.name}
-                </button>        
-            </>))
-            }
-        </div>
+        <FolderList
+            folders={folders}
+            currentFolder={currentFolder}
+            handleChangeFolder={handleChangeFolder}
+        />
     </div>
 </div>
 {modalContact ? <ContactList onClose={handleContactModal}/> : null}
