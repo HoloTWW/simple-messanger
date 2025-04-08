@@ -22,7 +22,7 @@ const InApp = () => {
       <Menu/>
       <ChatList/>
     </div>
-    <div className='col bg-secondary-subtle  h-100 overflow-hidden px-0' >
+    <div className='col bg-secondary-subtle  h-100 overflow-hidden px-0 pt-2' >
       <Chat/>
     </div>
   </div>
