@@ -1,6 +1,6 @@
 import React, { CSSProperties, use, useState } from "react";
 import ContactList from "./ModalComponent/ContactList";
-import Settings from "./ModalComponent/Settings";
+import Settings from "./ModalComponent/Settings/Settings";
 import { useAuth } from "../../components/AuthContext";
 import FolderList from "./ScrollFolder";
 
