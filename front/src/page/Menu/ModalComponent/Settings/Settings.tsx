@@ -1,4 +1,4 @@
-import React, { CSSProperties, useState } from "react";
+import React, { CSSProperties, useEffect, useRef, useState } from "react";
 import General from "./General";
 import Folders from "./Folders";
 
@@ -7,6 +7,12 @@ interface SettingsProps{
 }
 
 const Settings: React.FC<SettingsProps> = ({onClose}) =>{
+
+    const tabs = ["General","Folders"];
+    const [activeTab,setActiveTab] = useState<string>(tabs[0]);
+
+    const [contentHeight, setContentHeight] = useState<number>(0);
+    const contentRef = useRef<HTMLDivElement>(null);
 
     const st:CSSProperties = {
         zIndex:1000,
@@ -19,8 +25,36 @@ const Settings: React.FC<SettingsProps> = ({onClose}) =>{
         padding: '1rem', // optional, to give the content some space inside
     };
 
-    const tabs = ["General","Folders"];
-    const [activeTab,setActiveTab] = useState<string>(tabs[0]);
+    const containerStyle: React.CSSProperties = {
+        height: contentHeight,
+        overflow: 'hidden',
+        transition: 'height 0.3s ease-in-out',
+        position: 'relative',
+      };
+    
+
+    const contentSlideStyle: React.CSSProperties = {
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        width: '100%',
+        transition: 'transform 0.3s ease-in-out',
+    };
+
+    const contentInnerStyle: React.CSSProperties = {
+        position: 'relative',
+        width: '100%',
+    };
+
+    
+
+    useEffect(() => {
+        if (contentRef.current) {
+          setContentHeight(contentRef.current.offsetHeight);
+        }
+      }, [activeTab]);
+
+    
 
     const header:string = "Settings";
 
@@ -43,10 +77,36 @@ const Settings: React.FC<SettingsProps> = ({onClose}) =>{
                 <button onClick={()=>setActiveTab(tabs[1])} className={`nav-link ${tabs[1] === activeTab ? "active": null }`}>{tabs[1]}</button>
             </li>
         </ul>
-        <div className=" pt-2">
-            {activeTab === tabs[0] ? <General/> : null}
-            {activeTab === tabs[1] ? <Folders/> : null}
+        <div
+        className="mt-2"
+        style={containerStyle}
+      >
+        <div
+          ref={contentRef}
+          style={{
+            ...contentSlideStyle,
+            transform:
+              activeTab === tabs[0] ? 'translateX(0%)' : 'translateX(-100%)',
+          }}
+        >
+          <div style={contentInnerStyle}>
+              <General />
+          </div>
         </div>
+
+        <div
+          style={{
+            ...contentSlideStyle,
+            left: '100%',
+            transform:
+              activeTab === tabs[1] ? 'translateX(-100%)' : 'translateX(0%)',
+          }}
+        >
+          <div style={contentInnerStyle}>
+              <Folders />
+          </div>
+        </div>
+      </div>
     </div>
 </div> 
 )}
