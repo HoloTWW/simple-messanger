@@ -80,7 +80,7 @@ const Menu = () =>{
 <div className=" p-3  bg-secondary-subtle">
     <div className="">
         <div className=" input-group">
-            <button onClick={handleDropdownToggle} className="btn btn-outline-light border-0 position-relative">
+            <button onClick={handleDropdownToggle} className="btn btn-outline-secondary border-0 position-relative">
                 <span className=" navbar-toggler-icon"></span>
                 {/* <img className="rounded" src="/default/avatar.jpeg" alt={"avatar.jpeg"} height={15}/> */}
                 {openDm ? <DropdownMenu/> : null}
