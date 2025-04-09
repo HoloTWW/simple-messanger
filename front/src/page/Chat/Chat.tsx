@@ -36,10 +36,10 @@ const Chat = () =>{
         message="queres?"/>
     
     </div>
-    <div className="px-3 my-3 py-2 d-flex align-items-end bg-body-secondary rounded">
+    <div className=" px-3 my-3 py-2 d-flex align-items-end bg-body-secondary rounded">
       <TextareaAutosize 
         style={{ transition: 'height 0.3s ease' }} 
-        className="form-control flex-grow-1" />
+        className="form-control flex-grow-1 overflow-hidden" />
       <button className="btn btn-primary ms-3">Send</button>
     </div>
 </div>
