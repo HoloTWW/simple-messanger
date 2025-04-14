@@ -1,0 +1,25 @@
+/* Folders.css */
+
+.folder-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .folder-item {
+    position: relative; /* Make the list items positioned */
+    transition: all 0.3s ease; /* Add transition to list items */
+  }
+  
+  .folder-item:hover {
+    transform: translateY(-2px);  /*Example hover effect*/
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /*Example hover effect*/
+  
+  }
+  
+  /*Optional moving animation for list items*/
+  .folder-item.moving {
+      transform: translateX(10px); /* Slight horizontal movement */
+      opacity:0.5;
+  
+  }
