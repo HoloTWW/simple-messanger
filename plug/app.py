@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify, make_response
+from flask import Flask, json, request, jsonify, make_response
 from flask_cors import CORS
 import jwt
 import datetime
@@ -18,7 +18,48 @@ users = {
     "iRykov": {"id": 2,"username":"iRykov", "password": "adminpass"},
 }
 
+# Load the chats data from the JSON file
+with open('storage/chats.json', 'r') as f:
+    chats = json.load(f)
+
+
+# REAL PLUG HERE 0_0
+@app.route('/api/chat', methods=['POST'])
+def get_chat():
+    r = request.get_json()
+    chatId = r.get('chatId')
+    print(chatId)
+    print(chats['chat2'])
+    if chatId in chats:
+        tmp = chats[chatId]
+        tmp.reverse()
+        return jsonify(tmp)
+    else:
+        return jsonify([]), 404
+
+
+@app.route('/api/chat/add', methods=['POST'])
+def add_message():  # function to add new messages
+    r = request.get_json()
+    chatId = r.get('chatId')
+    message = r.get('message')  # Expect the entire message object
+
+    if chatId in chats:
+        # Assuming message is a dict containing the new message data
+        chats[chatId].append(message)
+
+        # Save the updated chats back to the JSON file
+        with open('chats.json', 'w') as f:
+            json.dump(chats, f, indent=4)  # Save with indentation for readability
+
+        return jsonify({"message": "Message added successfully!"}), 201 # 201 Created
+
+    else:
+        return jsonify({"error": "Chat not found"}), 404
+
+
 # --- Utility Functions ---
+
 
 def token_required(f):
     @wraps(f)

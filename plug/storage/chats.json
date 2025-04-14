@@ -1,0 +1,53 @@
+{
+    "chat1": [],
+    "chat2": [
+        {
+            "chatId": "chat2",
+            "id": "1",
+            "username": "You",
+            "timestamp": "10:02",
+            "checked": true,
+            "message": "Привчедел"
+        },
+        {
+            "chatId": "chat2",
+            "id": "2",
+            "username": "You",
+            "timestamp": "10:02",
+            "checked": true,
+            "message": "Как мама?"
+        },
+        {
+            "chatId": "chat2",
+            "id": "3",
+            "username": "You",
+            "timestamp": "10:03",
+            "checked": true,
+            "message": ":D"
+        },
+        {
+            "chatId": "chat2",
+            "id": "4",
+            "username": "Bob",
+            "timestamp": "10:05",
+            "checked": null,
+            "message": "Опять ты выходишь на связь [данные удалены]?"
+        },
+        {
+            "chatId": "chat2",
+            "id": "5",
+            "username": "Bob",
+            "timestamp": "10:06",
+            "checked": null,
+            "message": "Сколько раз повторять, я лабы делаю, не мешай!"
+        },
+        {
+            "chatId": "chat2",
+            "id": "6",
+            "username": "Bob",
+            "timestamp": "10:07",
+            "checked": null,
+            "message": "-_-"
+        }
+    ]
+}
