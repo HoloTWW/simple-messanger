@@ -2,6 +2,8 @@ import { CSSProperties, useEffect, useState } from "react"
 import TextareaAutosize from 'react-textarea-autosize';
 import Sender from "./Sender";
 import Recipient from "./Recipient";
+import { useSelector } from "react-redux";
+import { RootState } from "../../store";
 
 const Chat = () =>{
     const [windowWidth, setWindowWidth] = useState(window.innerWidth);
@@ -19,12 +21,15 @@ const Chat = () =>{
       }, []);
 
       const st = {
-        margin: windowWidth <= 1140 ? '0' : '0 20% 0 20%',  // Адаптивный отступ
-        // Другие стили
+        margin: windowWidth <= 1140 ? '0' : '0 20% 0 20%', 
       };
+
+      const chatId = useSelector((state:RootState)=> state.app.selectedChatId); 
+
     return(
 <div style={st} className="d-flex flex-column h-100 bg-secondary-subtle">
     <div className=" overflow-x-hidden flex-grow-1 d-flex flex-column-reverse">
+      {chatId}
     <Sender 
         username={"Me"} 
         timestamp={"19.02.2025 22:44"} 

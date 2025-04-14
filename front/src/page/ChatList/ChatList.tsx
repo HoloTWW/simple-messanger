@@ -1,25 +1,23 @@
-import { Link } from "react-router-dom";
+// ChatList.tsx
+import React from 'react';
+import { Link } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
+import { RootState, setSelectedChatId } from '../../store'; // Укажите правильный путь
 import Checkmark from "../../components/Checkmark";
 import DoubleCheckmark from "../../components/DoubleChekmark";
-import { useState } from "react";
-
-const generateArray = (length:number, max:number) => (
-    [...new Array(length)]
-      .map(() => Math.round(Math.random() * max))
-  );
 
 interface ChatListItemProps {
     username:string,
     message:string,
     timestamp:string,
     fromSender?:boolean | null,
+    selected:boolean;
+    chatId: string; // Добавил id
 };
 
-const ChatListItem:React.FC<ChatListItemProps> = ({username,message,timestamp,fromSender}) =>{
-    const [hover,setHover] = useState<boolean>(false);
-
+const ChatListItem:React.FC<ChatListItemProps> = ({username,message,timestamp,fromSender,selected, chatId}) =>{
     const CheckMessage = ()=>{
-        let content = null; 
+        let content = null;
         if (fromSender === true){
             content = <DoubleCheckmark color={"currentColor"} size="85%"/>;
         }
@@ -30,8 +28,11 @@ const ChatListItem:React.FC<ChatListItemProps> = ({username,message,timestamp,fr
         return content;
     }
 
+    const st = "w-100 btn btn-outline-secondary rounded-0 border-0 m-0 p-0 px-2 py-1 ";
+    const st_active = st + " active"
+
     return(
-<Link to={"/chat/user"} className="w-100 btn btn-outline-secondary rounded-0 border-0 m-0 p-0 px-2 py-1">
+<Link to={`/chat/${username}`} className={selected ? st_active: st }>
     <div className="row row-cols-2">
         <div className="col-2 d-none d-xxl-block">
             <img className="rounded"  height={"60px"}  src="/default/avatar.jpeg" alt={"avatar.jpg"}/>
@@ -54,46 +55,46 @@ const ChatListItem:React.FC<ChatListItemProps> = ({username,message,timestamp,fr
                 <div className="col text-truncate text-start">
                     {message}
                 </div>
-                
+
             </div>
         </div>
-    </div>      
+    </div>
 </Link>
 )};
 
 
-const ChatList = ()=>{
-    const g = generateArray(20,25)
-    const [cheked,setChecked] = useState<boolean | null>(null);
-    
-    const handleReset = ()=>{
-        setChecked(null);
-    }
+const ChatList = () => {
+    const dispatch = useDispatch();
+    const currentFolderId = useSelector((state: RootState) => state.app.currentFolderId);
+    const chatListItems = useSelector((state: RootState) => state.app.chatListItems);
+    const selectedChatId = useSelector((state:RootState)=>state.app.selectedChatId);
 
-    const handleCheck = ()=>{
-        if (cheked){
-            setChecked(false);
-        }
-        if (cheked === false){
-            setChecked(true);
-        }
-        else if(cheked === null){
-            setChecked(true);
-        }
-    }
-    return(<div>
-        <button onClick={handleReset} className="btn btn-secondary">Reset</button>
-        <button onClick={handleCheck} className="btn btn-primary">Test Check</button>
-    {g.map((item,index)=>(
-        <ChatListItem 
-            username={"username loooooooooooooooooooon" + index} 
-            message={"message loooooooooooooooooooooooonсячсчясчся" + index}
-            timestamp={`${index}.03.2025`}
-            fromSender={cheked}
-            
-            />))} 
-    
-    </div>)
+  // Фильтруем чаты по выбранной папке
+    const filteredChatListItems = currentFolderId
+        ? chatListItems.filter((chat) => chat.folderId === currentFolderId)
+        : chatListItems;
+
+    const handleChatClick = (chatId: string) => {
+        dispatch(setSelectedChatId(chatId));
+    };
+
+ return (
+    <div>
+      {filteredChatListItems.map((item) => (
+        <div key={item.id} onClick={() => handleChatClick(item.id)}>
+            <ChatListItem
+              username={item.username}
+              message={item.message}
+              timestamp={item.timestamp}
+              fromSender={item.fromSender}
+              selected={selectedChatId === item.id ? true : false}
+              chatId={item.id}
+            />
+        </div>
+
+      ))}
+    </div>
+  );
 };
 
 export default ChatList;

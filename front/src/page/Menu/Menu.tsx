@@ -3,6 +3,8 @@ import ContactList from "./ModalComponent/ContactList";
 import Settings from "./ModalComponent/Settings/Settings";
 import { useAuth } from "../../components/AuthContext";
 import FolderList from "./ScrollFolder";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState, setCurrentFolder } from "../../store";
 
 interface Folder {
     id: string;
@@ -14,23 +16,12 @@ const Menu = () =>{
     const [modalContact,setModalContact] = useState<boolean>(false);
     const [modalSetting,setModalSetting] = useState<boolean>(false);
     
-    const [folders, setFolders] = useState<Folder[]>([
-        {id:"0",name:"General"},
-        {id:"2",name:"Private"},
-        {id:"3", name: "Work"},
-        {id:"4", name: "Work"},
-        {id:"5", name: "Work"},
-        {id:"6",name:"Private"},
-        {id:"7",name:"Privateeqweqeq3eq"},
-        {id:"8",name:"Private31232121"},
-        {id:"9",name:"Private"},
-        {id:"10",name:"Private"},
-    ]); 
-    
-    const [currentFolder, setCurrentFolder ] = useState<string>("0");
+    const dispatch = useDispatch();
+    const folders = useSelector((state:RootState) => state.app.folders );
+    const currentFolder = useSelector((state:RootState) => state.app.currentFolderId);
 
-    const handleChangeFolder = (id: string) =>{
-        setCurrentFolder(id);
+    const handleChangeFolder = (chatId: string) =>{
+        dispatch(setCurrentFolder(chatId));
     };
 
 
@@ -82,7 +73,6 @@ const Menu = () =>{
         <div className=" input-group">
             <button onClick={handleDropdownToggle} className="btn btn-outline-secondary border-0 position-relative">
                 <span className=" navbar-toggler-icon"></span>
-                {/* <img className="rounded" src="/default/avatar.jpeg" alt={"avatar.jpeg"} height={15}/> */}
                 {openDm ? <DropdownMenu/> : null}
             </button>
             <input className=" form-control" type="text"/>  

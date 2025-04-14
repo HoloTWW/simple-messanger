@@ -10,6 +10,8 @@ import ChatList from './page/ChatList/ChatList';
 import Chat from './page/Chat/Chat';
 import { AuthProvider, useAuth } from './components/AuthContext';
 import Etc from './page/404Page/404Page';
+import { Provider } from 'react-redux';
+import { store } from './store';
 
 
 const InApp = () => {
@@ -49,17 +51,19 @@ const PrivateRoute: React.FC<PrivateRouteProps> = ({ children }) => {
 function App() {
   return (
     <div className=''>
-<AuthProvider>
-  <BrowserRouter>
-    <Routes>
-      <Route path="/" element={<PrivateRoute><InApp/></PrivateRoute>}/>
-      <Route path="/chat/:interlocutor" element={<PrivateRoute><InApp/></PrivateRoute>}/>
-      <Route path="/sign-in" element={<SignIn/>}/>
-      <Route path="/sign-up" element={<SignUp/>} />
-      <Route path="*" element={<Etc/>}/>
-    </Routes>
-  </BrowserRouter>
+<Provider store={store}>
+  <AuthProvider>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<PrivateRoute><InApp/></PrivateRoute>}/>
+        <Route path="/chat/:interlocutor" element={<PrivateRoute><InApp/></PrivateRoute>}/>
+        <Route path="/sign-in" element={<SignIn/>}/>
+        <Route path="/sign-up" element={<SignUp/>} />
+        <Route path="*" element={<Etc/>}/>
+      </Routes>
+    </BrowserRouter>
 </AuthProvider>
+</Provider>
     </div>
   );
 }
