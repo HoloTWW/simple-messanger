@@ -6,7 +6,8 @@ const raw_uri = {
     check_auth:'/api/check-auth',
     login:'/api/login',
     logout:'/api/logout',
-    chat:'/api/chat'
+    chat:'/api/chat',
+    chat_send:'/api/chat/add',
 }
 
 const host = "http://127.0.0.1:5000";

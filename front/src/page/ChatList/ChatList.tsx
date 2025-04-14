@@ -80,6 +80,7 @@ const ChatList = () => {
 
  return (
     <div>
+        {/* <div>current folder: {currentFolderId}</div> */}
       {filteredChatListItems.map((item) => (
         <div key={item.id} onClick={() => handleChatClick(item.id)}>
             <ChatListItem

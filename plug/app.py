@@ -24,14 +24,33 @@ with open('storage/chats.json', 'r') as f:
 
 
 # REAL PLUG HERE 0_0
+
+
+def get_next_message_id(chat_id):
+    """
+    Finds the next available ID for a chat.
+    """
+    if chat_id in chats:
+        if chats[chat_id]:  # Check if the chat has any messages
+            return str(int(chats[chat_id][-1]['id']) + 1) # Increment last id
+        else:
+            return "1"  # Start at 1 if chat is empty
+    return "1" # default if chat not found
+
+
+# Load the chats data from the JSON file
+with open('storage/chats.json', 'r') as f:
+    chats = json.load(f)
+
+
 @app.route('/api/chat', methods=['POST'])
 def get_chat():
     r = request.get_json()
     chatId = r.get('chatId')
-    print(chatId)
-    print(chats['chat2'])
+
     if chatId in chats:
         tmp = chats[chatId]
+        tmp.sort(key=lambda x: datetime.datetime.strptime(x['timestamp'], '%H:%M'))
         tmp.reverse()
         return jsonify(tmp)
     else:
@@ -39,24 +58,36 @@ def get_chat():
 
 
 @app.route('/api/chat/add', methods=['POST'])
-def add_message():  # function to add new messages
+def add_message():
     r = request.get_json()
     chatId = r.get('chatId')
-    message = r.get('message')  # Expect the entire message object
+    message_text = r.get('message') # Changed variable name, for readability.
 
     if chatId in chats:
-        # Assuming message is a dict containing the new message data
-        chats[chatId].append(message)
+        # Generate new message data
+        now = datetime.datetime.now()
+        timestamp = now.strftime("%H:%M")
+        new_message = {
+            "chatId": chatId,
+            "id": get_next_message_id(chatId),
+            "username": "You",
+            "timestamp": timestamp,
+            "checked": False,
+            "message": message_text,
+        }
+
+        chats[chatId].append(new_message)
 
         # Save the updated chats back to the JSON file
-        with open('chats.json', 'w') as f:
-            json.dump(chats, f, indent=4)  # Save with indentation for readability
-
-        return jsonify({"message": "Message added successfully!"}), 201 # 201 Created
-
+        try:  # added for safety
+            with open('storage/chats.json', 'w') as f:
+                json.dump(chats, f, indent=4)
+            return jsonify(new_message), 201  # Return the new_message
+        except Exception as e:
+            print(f"Error writing to chats.json: {e}")  # log the error
+            return jsonify({"error": "Failed to save message"}), 500 # Internal Server Error
     else:
         return jsonify({"error": "Chat not found"}), 404
-
 
 # --- Utility Functions ---
 

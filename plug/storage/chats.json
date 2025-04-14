@@ -3,51 +3,101 @@
     "chat2": [
         {
             "chatId": "chat2",
-            "id": "1",
-            "username": "You",
-            "timestamp": "10:02",
-            "checked": true,
-            "message": "Привчедел"
-        },
-        {
-            "chatId": "chat2",
-            "id": "2",
-            "username": "You",
-            "timestamp": "10:02",
-            "checked": true,
-            "message": "Как мама?"
-        },
-        {
-            "chatId": "chat2",
+            "checked": false,
             "id": "3",
-            "username": "You",
-            "timestamp": "10:03",
-            "checked": true,
-            "message": ":D"
+            "message": "dct ghbd ghhjjk",
+            "timestamp": "19:03",
+            "username": "You"
         },
         {
             "chatId": "chat2",
-            "id": "4",
-            "username": "Bob",
-            "timestamp": "10:05",
+            "checked": false,
+            "id": "2",
+            "message": "dct ghbd",
+            "timestamp": "19:01",
+            "username": "You"
+        },
+        {
+            "chatId": "chat2",
+            "checked": false,
+            "id": "2",
+            "message": "\u0417\u0434\u0440\u0430\u0432\u0441\u0442\u0432\u0443\u0439\u0442\u0435 \u0418\u0432\u0430\u043d \u0421\u0435\u0440\u0433\u0435\u0435\u0432\u0438\u0447!",
+            "timestamp": "18:59",
+            "username": "You"
+        },
+        {
+            "chatId": "chat2",
+            "checked": false,
+            "id": "3",
+            "message": "....\u0411\u044b\u0432\u0430\u0435\u0442",
+            "timestamp": "17:52",
+            "username": "You"
+        },
+        {
+            "chatId": "chat2",
             "checked": null,
-            "message": "Опять ты выходишь на связь [данные удалены]?"
-        },
-        {
-            "chatId": "chat2",
-            "id": "5",
-            "username": "Bob",
-            "timestamp": "10:06",
-            "checked": null,
-            "message": "Сколько раз повторять, я лабы делаю, не мешай!"
-        },
-        {
-            "chatId": "chat2",
             "id": "6",
-            "username": "Bob",
+            "message": "-_-",
             "timestamp": "10:07",
+            "username": "Bob"
+        },
+        {
+            "chatId": "chat2",
             "checked": null,
-            "message": "-_-"
+            "id": "5",
+            "message": "\u0421\u043a\u043e\u043b\u044c\u043a\u043e \u0440\u0430\u0437 \u043f\u043e\u0432\u0442\u043e\u0440\u044f\u0442\u044c, \u044f \u043b\u0430\u0431\u044b \u0434\u0435\u043b\u0430\u044e, \u043d\u0435 \u043c\u0435\u0448\u0430\u0439!",
+            "timestamp": "10:06",
+            "username": "Bob"
+        },
+        {
+            "chatId": "chat2",
+            "checked": null,
+            "id": "4",
+            "message": "\u041e\u043f\u044f\u0442\u044c \u0442\u044b \u0432\u044b\u0445\u043e\u0434\u0438\u0448\u044c \u043d\u0430 \u0441\u0432\u044f\u0437\u044c [\u0434\u0430\u043d\u043d\u044b\u0435 \u0443\u0434\u0430\u043b\u0435\u043d\u044b]?",
+            "timestamp": "10:05",
+            "username": "Bob"
+        },
+        {
+            "chatId": "chat2",
+            "checked": true,
+            "id": "3",
+            "message": ":D",
+            "timestamp": "10:03",
+            "username": "You"
+        },
+        {
+            "chatId": "chat2",
+            "checked": true,
+            "id": "2",
+            "message": "\u041a\u0430\u043a \u043c\u0430\u043c\u0430?",
+            "timestamp": "10:02",
+            "username": "You"
+        },
+        {
+            "chatId": "chat2",
+            "checked": true,
+            "id": "1",
+            "message": "\u041f\u0440\u0438\u0432\u0447\u0435\u0434\u0435\u043b",
+            "timestamp": "10:02",
+            "username": "You"
+        }
+    ],
+    "chat6": [
+        {
+            "chatId": "chat6",
+            "checked": null,
+            "id": "1",
+            "message": "\u0414\u0430 \u044d\u0442\u043e\u0442 \u0432\u0430\u0448 \u0445\u0430\u0434\u0443\u043f \u0437\u0430 2 \u043d\u0435\u0434\u0435\u043b\u0438 \u0434\u0435\u043b\u0430\u0435\u0442\u0441\u044f",
+            "timestamp": "10:07",
+            "username": "\u0422\u0443\u043b\u0430"
+        },
+        {
+            "chatId": "chat6",
+            "checked": false,
+            "id": "2",
+            "message": "priv",
+            "timestamp": "19:04",
+            "username": "You"
         }
     ]
 }

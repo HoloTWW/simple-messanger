@@ -38,11 +38,11 @@ const Chat = () =>{
 
     const chatId = useSelector((state:RootState)=> state.app.selectedChatId); 
 
-    const [chatContent,setChatContent] = useState<MessageProps[]>([]); // исправить
+    const [chatContent,setChatContent] = useState<MessageProps[]>([]); 
     
-    const handleUpdateData = (data:MessageProps[])=>{ // дописать
+    const handleUpdateData = (data:MessageProps[])=>{
       setChatContent(data);
-    }
+    };
 
     useEffect(()=>{
       axios.post(uri_dict.chat,{chatId:chatId})
@@ -72,28 +72,43 @@ const Chat = () =>{
       ))}
       </>)
     }
+    
+    // textarea
+
+    const [message,setMessage] = useState<string>("");
+    const handleOnChangeMessage = (e:React.ChangeEvent<HTMLTextAreaElement>) =>{
+      setMessage(e.target.value);
+    }
+
+    const handleSendMessage = ()=>{
+      axios.post(uri_dict.chat_send,{chatId:chatId,message:message})
+        .then((r)=>{
+          const newMessage: MessageProps = r.data;
+
+          // Append the new message to the existing chatContent
+          setChatContent((prevChatContent) => [newMessage,...prevChatContent]);
+
+          // Clear the input field
+          setMessage('');
+        })
+        .catch((e)=>console.log(e))
+    };
 
     return(
 <div style={st} className="d-flex flex-column h-100 bg-secondary-subtle">
+  <div className=" bg-secondary">
+    {/* <span>Current chat: {chatId}, cur message: {message}</span> */}
+  </div>
     <div className=" overflow-x-hidden flex-grow-1 d-flex flex-column-reverse">
-      {chatId}
-    <ChatContent/>
-    <Sender 
-        username={"Me"} 
-        timestamp={"19.02.2025 22:44"} 
-        checked={false}
-        message="my final message, goodbye... "/>
-    <Recipient
-        username={"Someone"} 
-        timestamp={"19.02.2025 22:41"} 
-        message="queres?"/>
-    
+      {chatContent.length > 0 ? <ChatContent/>:<span className=" text-muted">No messages, be first to start chatting (^_^)</span>} 
     </div>
     <div className=" px-3 my-3 py-2 d-flex align-items-end bg-body-secondary rounded">
-      <TextareaAutosize 
+      <TextareaAutosize
+        value={message}
+        onChange={(e)=>handleOnChangeMessage(e)} 
         style={{ transition: 'height 0.3s ease' }} 
         className="form-control flex-grow-1 overflow-hidden" />
-      <button className="btn btn-primary ms-3">Send</button>
+      <button onClick={()=>handleSendMessage()} className="btn btn-primary ms-3">Send</button>
     </div>
 </div>
 )};
