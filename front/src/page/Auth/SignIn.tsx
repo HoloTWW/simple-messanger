@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useAuth } from "../../components/AuthContext";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const SignIn = ()=>{
 
@@ -55,7 +55,7 @@ const SignIn = ()=>{
             <label>{label_pswd}</label>
             <input onChange={(value)=>setPassword(value.target.value)} className= {valid ? v_default : v_invalid } type="password"/>
         </div>
-
+        <Link to={"/sign-up"}>Or sign up?</Link>
         <div className="mt-4 row mx-auto">
             <button onClick={handleOnSubmit} className="btn btn-primary">Sign In</button>
         </div>

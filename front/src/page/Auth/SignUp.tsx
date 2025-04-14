@@ -5,7 +5,7 @@ const SignUp = ()=>{
     const [login,setLogin] = useState<string>();
     const [password,setPassword] = useState<string>();
 
-    const [valid,setValid] = useState(false);
+    const [valid,setValid] = useState(true);
     
     const styleContainer = {
         width:"100%",
