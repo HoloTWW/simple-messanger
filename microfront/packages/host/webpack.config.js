@@ -64,6 +64,7 @@ module.exports = {
           requiredVersion: dependencies['react-router-dom'],
           eager: true,
         },
+        'shared': { singleton: true, requiredVersion: dependencies['shared'] },
       },
     }),
     new HtmlWebpackPlugin({

@@ -1,35 +1,34 @@
-import React, { Suspense, lazy } from 'react';
-import { Routes, Route, Link } from 'react-router-dom';
+import React, { Suspense, lazy, useEffect, useState } from 'react';
+import { Routes, Route, Link, useNavigate } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
+// @ts-ignore
 const MainApp = lazy(() => import('messanger/MessangerApp'));
+// @ts-ignore 
 const AuthApp = lazy(() => import('auth/AuthApp'));
 
 const HostApp = () => {
+  const [lg,setLg] = useState<boolean>(true);
   return (
-    <div className="container mt-5">
-      <h1>Host Application</h1>
-      <nav className="mb-4">
-        <Link to="/" className="btn btn-link me-2">Home</Link>
-        <Link to="/main" className="btn btn-link me-2">Main App</Link>
-        <Link to="/auth" className="btn btn-link">Auth App</Link>
-      </nav>
-
-      <Suspense fallback={<div>Loading...</div>}>
-        <Routes>
-          <Route path="/main" element={<MainApp />} />
-          <Route path="/auth" element={<AuthApp />} />
-          <Route path="/" element={<HomePage />} />
-        </Routes>
-      </Suspense>
-    </div>
+      <div className="mt-5">
+        <nav className="mb-4 d-flex justify-content-center">
+          {/* <Link to="/main" className="btn btn-link me-2">Main App</Link> */}
+          <Link to="/auth/sign-in" className="btn btn-link">Auth</Link>
+        </nav>
+          <Suspense fallback={<div>Loading...</div>}>
+            <Routes>
+              <Route path="/main" element={<MainApp />} />
+              <Route path="/auth/*" element={<AuthApp />} />
+              <Route path="/" element={<HomePage />} />
+            </Routes>
+          </Suspense>
+      </div>
   );
 };
 
 const HomePage = () => (
-  <div>
-    <h2>Welcome to Host App</h2>
-    <p>Select an app from the navigation above.</p>
+  <div className='text-center'>
+    <h2>Host App </h2>
   </div>
 );
 

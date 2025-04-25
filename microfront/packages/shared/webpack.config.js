@@ -37,6 +37,8 @@ module.exports = {
       name: 'shared',
       filename: 'remoteEntry.js',
       exposes: {
+        './AuthProvider':'./src/components/AuthContext',
+        './useAuth':'./src/components/AuthContext',
         './Button': './src/components/Button',
       },
       shared: {

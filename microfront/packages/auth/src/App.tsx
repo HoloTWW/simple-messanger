@@ -1,13 +1,19 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Route, Routes } from 'react-router-dom';
+import SignIn from './pages/SignIn';
+import SignUp from './pages/SignUp';
+
+const Si = ()=><>Avboba</>;
 
 const AuthApp: React.FC = () => {
   return (
     <div className="container mt-5">
-      <h1>Auth Application (Port: 3002)</h1>
+      <h1>Auth Application (Port: 3001) Check Queres</h1>
       <div className="mt-3">
-        <Link to="/main" className="btn btn-link">Go to Main</Link>
-        <Link to="/" className="btn btn-link">Go to Host</Link>
+        <Routes>
+          <Route path="sign-in" element={<SignIn/>} />
+          <Route path="sign-up" element={<SignUp />} />
+        </Routes>
       </div>
     </div>
   );
